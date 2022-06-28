@@ -18,7 +18,7 @@ class ApiController extends Controller
 
       //  $users = Nutrition::all();
 
-          if ($request->headers->get('Content-Type') == 'application/json' && $request->headers->get('X-API-SECRET') == '8821'){
+    /*      if ($request->headers->get('Content-Type') == 'application/json' && $request->headers->get('X-API-SECRET') == '8821'){*/
 
               $users = DB::table('nutrition')
                   ->selectRaw('id,name, details,url')
@@ -27,13 +27,13 @@ class ApiController extends Controller
 
               return new JsonResponse($users);
 
-           }else{
+          /* }else{
 
                return new JsonResponse([
                    'message' => 'Invalied Headers',
                    'status' => 500
                ]);
-           }
+           }*/
 
 
 
