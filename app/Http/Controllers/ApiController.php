@@ -15,29 +15,164 @@ class ApiController extends Controller
     {
 
 
+        //  $users = Nutrition::all();
 
-      //  $users = Nutrition::all();
+        if ($request->headers->get('Content-Type') == 'application/json' && $request->headers->get('X-API-SECRET') == '8821') {
 
-    /*      if ($request->headers->get('Content-Type') == 'application/json' && $request->headers->get('X-API-SECRET') == '8821'){*/
-
-              $users = DB::table('nutrition')
-                  ->selectRaw('id,name, details,url')
-                  ->get();
+            $users = DB::table('nutrition')
+                ->selectRaw('id,name, details,url')
+                ->get();
 
 
-              return new JsonResponse($users);
+            return new JsonResponse($users);
 
-          /* }else{
+        } else {
 
-               return new JsonResponse([
-                   'message' => 'Invalied Headers',
-                   'status' => 500
-               ]);
-           }*/
+            return new JsonResponse([
+                'message' => 'Invalied Headers',
+                'status' => 500
+            ]);
+        }
 
 
         //done
 
 
     }
+
+
+    public function getGuide(Request $request)
+    {
+
+        if ($request->headers->get('Content-Type') == 'application/json' && $request->headers->get('X-API-SECRET') == '8821') {
+
+            $users = DB::table('guide')
+                ->selectRaw('id,name, details')
+                ->get();
+
+
+            return new JsonResponse($users);
+
+        } else {
+
+            return new JsonResponse([
+                'message' => 'Invalied Headers',
+                'status' => 500
+            ]);
+        }
+
+
+    }
+
+    public function getSports(Request $request)
+    {
+
+        if ($request->headers->get('Content-Type') == 'application/json' && $request->headers->get('X-API-SECRET') == '8821') {
+
+            $users = DB::table('sports')
+                ->selectRaw('id,name, details,url')
+                ->get();
+
+
+            return new JsonResponse($users);
+
+        } else {
+
+            return new JsonResponse([
+                'message' => 'Invalied Headers',
+                'status' => 500
+            ]);
+        }
+
+
+    }
+    public function getAppointment(Request $request)
+    {
+
+        if ($request->headers->get('Content-Type') == 'application/json' && $request->headers->get('X-API-SECRET') == '8821') {
+
+            $users = DB::table('appointment')
+                ->selectRaw('id,name, details,year,phone')
+                ->get();
+
+
+            return new JsonResponse($users);
+
+        } else {
+
+            return new JsonResponse([
+                'message' => 'Invalied Headers',
+                'status' => 500
+            ]);
+        }
+
+
+    }
+    public function getRest(Request $request)
+    {
+
+        if ($request->headers->get('Content-Type') == 'application/json' && $request->headers->get('X-API-SECRET') == '8821') {
+
+            $users = DB::table('rest')
+                ->selectRaw('id,name, details,url')
+                ->get();
+
+
+            return new JsonResponse($users);
+
+        } else {
+
+            return new JsonResponse([
+                'message' => 'Invalied Headers',
+                'status' => 500
+            ]);
+        }
+
+
+    }
+    public function getPragnancyProblem(Request $request)
+    {
+
+        if ($request->headers->get('Content-Type') == 'application/json' && $request->headers->get('X-API-SECRET') == '8821') {
+
+            $users = DB::table('pragnancy_problem')
+                ->selectRaw('id,name, details,url')
+                ->get();
+
+
+            return new JsonResponse($users);
+
+        } else {
+
+            return new JsonResponse([
+                'message' => 'Invalied Headers',
+                'status' => 500
+            ]);
+        }
+
+
+    }
+    public function getPregnancyPreparation(Request $request)
+    {
+
+        if ($request->headers->get('Content-Type') == 'application/json' && $request->headers->get('X-API-SECRET') == '8821') {
+
+            $users = DB::table('pregnancy_preparation')
+                ->selectRaw('id,name, details,url')
+                ->get();
+
+
+            return new JsonResponse($users);
+
+        } else {
+
+            return new JsonResponse([
+                'message' => 'Invalied Headers',
+                'status' => 500
+            ]);
+        }
+
+
+    }
 }
+
