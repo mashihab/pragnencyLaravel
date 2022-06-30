@@ -17,6 +17,7 @@ class CreateGuideTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->longText('details')->nullable();
+            $table->longText('url')->nullable();
             $table->timestamps();
         });
     }

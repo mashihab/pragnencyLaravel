@@ -74,7 +74,7 @@ class ApiController extends Controller
         if ($request->headers->get('Content-Type') == 'application/json' && $request->headers->get('X-API-SECRET') == '8821') {
 
             $users = DB::table('guide')
-                ->selectRaw('id,name, details')
+                ->selectRaw('id,name, details,url')
                 ->get();
 
 
