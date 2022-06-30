@@ -15,11 +15,23 @@ class CreateNutritionTable extends Migration
     {
         Schema::create('nutrition', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('guide_id')->unsigned()->nullable(true);
              $table->string('name')->nullable();
             $table->longText('details')->nullable();
             $table->string('url')->nullable();
             $table->timestamps();
+
+            $table->foreign('guide_id')
+                ->references('id')
+                ->on('guide')
+                ->onDelete('cascade');
+
         });
+
+
+
+
+
     }
 
     /**

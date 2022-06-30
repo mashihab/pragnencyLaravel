@@ -40,6 +40,33 @@ class ApiController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getGuideDetailsById(Request $request)
+    {
+
+/*
+        if ($request->headers->get('Content-Type') == 'application/json' && $request->headers->get('X-API-SECRET') == '8821') {*/
+
+            $data = DB::table('nutrition')
+                ->selectRaw('id,name, details,url')
+                ->where('guide_id', $request->id)
+                ->get();
+
+            return new JsonResponse($data);
+
+      /*  } else {
+
+            return new JsonResponse([
+                'message' => 'Invalied Headers',
+                'status' => 500
+            ]);
+        }*/
+
+    }
+
 
     public function getGuide(Request $request)
     {
@@ -86,6 +113,7 @@ class ApiController extends Controller
 
 
     }
+
     public function getAppointment(Request $request)
     {
 
@@ -108,6 +136,7 @@ class ApiController extends Controller
 
 
     }
+
     public function getRest(Request $request)
     {
 
@@ -130,6 +159,7 @@ class ApiController extends Controller
 
 
     }
+
     public function getPragnancyProblem(Request $request)
     {
 
@@ -152,6 +182,7 @@ class ApiController extends Controller
 
 
     }
+
     public function getPregnancyPreparation(Request $request)
     {
 

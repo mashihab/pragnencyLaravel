@@ -19,5 +19,6 @@ Route::GET('/guide', [\App\Http\Controllers\ApiController::class,'getGuide']);
 Route::GET('/sport', [\App\Http\Controllers\ApiController::class,'getSports']);
 Route::GET('/appointment', [\App\Http\Controllers\ApiController::class,'getAppointment']);
 Route::GET('/rest', [\App\Http\Controllers\ApiController::class,'getRest']);
-Route::GET('/pragnancy-problem', [\App\Http\Controllers\ApiController::class,'getPragnancyProblem']);
-Route::GET('/pregnancy-preparation', [\App\Http\Controllers\ApiController::class,'getPregnancyPreparation']);
+Route::GET('/pragnancy_problem', [\App\Http\Controllers\ApiController::class,'getPragnancyProblem']);
+Route::GET('/pregnancy_preparation', [\App\Http\Controllers\ApiController::class,'getPregnancyPreparation']);
+Route::GET('/guide_detals/{id}', [\App\Http\Controllers\ApiController::class,'getGuideDetailsById']);
