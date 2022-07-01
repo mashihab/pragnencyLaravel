@@ -279,7 +279,8 @@ class ApiController extends Controller
     public function sendPushNotification()
     {
 
-        $tokens = array('token_1','token_2','token_3');
+     //   $tokens = array('token_1','token_2','token_3');
+        $tokens = array('cfAgCtHXSdezJdXfHB02WQ:APA91bG8WtSkZiIM5i5kLMW0tXk0AStTXXgAQFosDPSxyZ4-gGse3SgjdxniiW7zWX9hiZsUg1c2zTFJqGdJSPcvCNXj-LD6ZyeUyQ5-pNxs8O84721TrLH2fO2ype2pEEwlVQvAckBe');
         $title = "Title Here";
         $msg = "Subtitle or description Here";
 //Custom Parameters if any
@@ -290,7 +291,7 @@ class ApiController extends Controller
         push_notification_android($tokens,$title,$msg,$customParam);
         function push_notification_android($tokens,$title,$msg,$customParam) {
             $url = 'https://fcm.googleapis.com/fcm/send';
-            $api_key = 'fcm_server_api_key';
+            $api_key = 'AAAA5EHSlsA:APA91bE7E-A-c9vrB841JbazYDeMBAUvXgNr6rrL983HY1Tb-o8KMAZ92FKPWw7nj53eKY0C-on1xI2_0SpLGmh6VvBRHde3e_pYDfRQ_KT3mk4YcV2Qb-m4Onh70I6AsL4-aVyhZvZ1';
             $messageArray = array();
             $messageArray["notification"] = array (
                 'title' => $title,
