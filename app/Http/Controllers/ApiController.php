@@ -20,7 +20,6 @@ class ApiController extends Controller
     public function pragnencySignup(Request $request)
     {
 
-
         $name= $request->get('name');
         $details= $request->get('details');
         $phone= $request->get('phone');
