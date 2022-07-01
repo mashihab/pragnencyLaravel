@@ -13,6 +13,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ApiController extends Controller
 {
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|JsonResponse
+     */
     public function pragnencySignup(Request $request)
     {
 
