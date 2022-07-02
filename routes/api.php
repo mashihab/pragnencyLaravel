@@ -25,4 +25,5 @@ Route::GET('/guide_detals/{id}', [\App\Http\Controllers\ApiController::class,'ge
 Route::POST('/guide_detals_post', [\App\Http\Controllers\ApiController::class,'getGuideDetailsPost']);
 Route::POST('/pragnency_signup', [\App\Http\Controllers\ApiController::class,'pragnencySignup']);
 Route::GET('/get_all_user', [\App\Http\Controllers\ApiController::class,'getAllUser']);
+Route::GET('/insert_auto', [\App\Http\Controllers\ApiController::class,'insertAuto']);
 /*Route::GET('/send_notification', [\App\Http\Controllers\ApiController::class,'sendPushNotification']);*/

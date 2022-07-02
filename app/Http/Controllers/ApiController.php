@@ -3,11 +3,22 @@
 namespace App\Http\Controllers;
 
 
+
+
+use App\Models\Guids;
+use App\Models\Members;
+use App\Models\Nutrition;
+use App\Models\UserPregnancy;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+
 function sendPushNotification($week,$fcm)
 {
 
     //   $tokens = array('token_1','token_2','token_3');
-/*    $tokens = array('eTP0tmo1Q7-PyL8xCOrNRE:APA91bEqljWxM870p6EZIYUO-EnSRW4cwEvY7Q0mEkQBiZ3m-BYQBKIaRaLM4Q_KSi-SDmvysQ109i_Z5X9cDvqRsJMRjTN3JPkOrXKuB5WJxcxuNr486zTNRz2RaHE8h_KY_B7OpRJ8', 'cfAgCtHXSdezJdXfHB02WQ:APA91bG8WtSkZiIM5i5kLMW0tXk0AStTXXgAQFosDPSxyZ4-gGse3SgjdxniiW7zWX9hiZsUg1c2zTFJqGdJSPcvCNXj-LD6ZyeUyQ5-pNxs8O84721TrLH2fO2ype2pEEwlVQvAckBe');*/
+    /*    $tokens = array('eTP0tmo1Q7-PyL8xCOrNRE:APA91bEqljWxM870p6EZIYUO-EnSRW4cwEvY7Q0mEkQBiZ3m-BYQBKIaRaLM4Q_KSi-SDmvysQ109i_Z5X9cDvqRsJMRjTN3JPkOrXKuB5WJxcxuNr486zTNRz2RaHE8h_KY_B7OpRJ8', 'cfAgCtHXSdezJdXfHB02WQ:APA91bG8WtSkZiIM5i5kLMW0tXk0AStTXXgAQFosDPSxyZ4-gGse3SgjdxniiW7zWX9hiZsUg1c2zTFJqGdJSPcvCNXj-LD6ZyeUyQ5-pNxs8O84721TrLH2fO2ype2pEEwlVQvAckBe');*/
 
 
     $tokens = array($fcm);
@@ -20,8 +31,8 @@ function sendPushNotification($week,$fcm)
         $title = "Title Here shihab";
         $msg = "Week is not 1";
     }else{
-    $title = "Title Here shihab";
-    $msg = "No Week";
+        $title = "Title Here shihab";
+        $msg = "No Week";
     }
 
 
@@ -81,20 +92,28 @@ function sendPushNotification($week,$fcm)
 
 }
 
-use App\Models\Guids;
-use App\Models\Members;
-use App\Models\Nutrition;
-use App\Models\UserPregnancy;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Symfony\Component\HttpFoundation\JsonResponse;
-
-
-
-
 
 class ApiController extends Controller
 {
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|JsonResponse
+     */
+    public function insertAuto(Request $request)
+    {
+
+
+            $user_pragnency = new UserPregnancy();
+            $user_pragnency->name = "shihab";
+            $user_pragnency->details = "dd";
+            $user_pragnency->phone = "235345";
+            $user_pragnency->save();
+
+
+
+
+    }
 
     /**
      * @param Request $request
@@ -382,10 +401,10 @@ class ApiController extends Controller
 
 
             if ($intday % 7 == 0) {
-                echo "data show".$intday. "<br>";
+               // echo "data show".$intday. "<br>";
                 sendPushNotification($intday/7,"" . $data->fcm_token);
             } else {
-                echo "no need to show".$intday. "<br>";
+             //   echo "no need to show".$intday. "<br>";
             }
 
         }
