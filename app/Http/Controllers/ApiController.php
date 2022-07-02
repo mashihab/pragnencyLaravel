@@ -2,6 +2,85 @@
 
 namespace App\Http\Controllers;
 
+
+function sendPushNotification($week,$fcm)
+{
+
+    //   $tokens = array('token_1','token_2','token_3');
+/*    $tokens = array('eTP0tmo1Q7-PyL8xCOrNRE:APA91bEqljWxM870p6EZIYUO-EnSRW4cwEvY7Q0mEkQBiZ3m-BYQBKIaRaLM4Q_KSi-SDmvysQ109i_Z5X9cDvqRsJMRjTN3JPkOrXKuB5WJxcxuNr486zTNRz2RaHE8h_KY_B7OpRJ8', 'cfAgCtHXSdezJdXfHB02WQ:APA91bG8WtSkZiIM5i5kLMW0tXk0AStTXXgAQFosDPSxyZ4-gGse3SgjdxniiW7zWX9hiZsUg1c2zTFJqGdJSPcvCNXj-LD6ZyeUyQ5-pNxs8O84721TrLH2fO2ype2pEEwlVQvAckBe');*/
+
+
+    $tokens = array($fcm);
+
+
+    if ($week== 2){
+        $title = "Title Here shihab";
+        $msg = "Week is 2";
+    }else if ($week== 1){
+        $title = "Title Here shihab";
+        $msg = "Week is not 1";
+    }else{
+    $title = "Title Here shihab";
+    $msg = "No Week";
+    }
+
+
+
+    function push_notification_android($tokens, $title, $msg)
+    {
+        $url = 'https://fcm.googleapis.com/fcm/send';
+        $api_key = 'AAAA5EHSlsA:APA91bE7E-A-c9vrB841JbazYDeMBAUvXgNr6rrL983HY1Tb-o8KMAZ92FKPWw7nj53eKY0C-on1xI2_0SpLGmh6VvBRHde3e_pYDfRQ_KT3mk4YcV2Qb-m4Onh70I6AsL4-aVyhZvZ1';
+        $messageArray = array();
+        $messageArray["notification"] = array(
+            'title' => $title,
+            'message' => $msg,
+        );
+        $fields = array(
+            /*  'to' => "/topics/shihab",  */   //if i want to send using topic then use this line
+            'registration_ids' => $tokens,
+            'data' => array(
+                'title' => $title,
+                'message' => $msg
+            )
+        );
+
+
+        /*  $fields =array('to'=>$tokens,
+              'notification'=>array('title'=>$title,'body'=>$msg));
+
+          $payload =json_encode($fields);*/
+
+        $headers = array(
+            'Authorization: key=' . $api_key, //GOOGLE_API_KEY
+            'Content-Type: application/json'
+        );
+
+
+        // dd(json_encode($fields));
+// Open connection
+        $ch = curl_init();
+// Set the url, number of POST vars, POST data
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+// Disabling SSL Certificate support temporarly
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+// Execute post
+        $result = curl_exec($ch);
+        if ($result === FALSE) {
+            echo 'Android: Curl failed: ' . curl_error($ch);
+        }
+// Close connection
+        curl_close($ch);
+        return $result;
+    }
+
+    push_notification_android($tokens, $title, $msg);
+
+}
+
 use App\Models\Guids;
 use App\Models\Members;
 use App\Models\Nutrition;
@@ -9,6 +88,10 @@ use App\Models\UserPregnancy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\JsonResponse;
+
+
+
+
 
 class ApiController extends Controller
 {
@@ -20,11 +103,11 @@ class ApiController extends Controller
     public function pragnencySignup(Request $request)
     {
 
-        $name= $request->get('name');
-        $details= $request->get('details');
-        $phone= $request->get('phone');
-        $period_date= $request->get('period_date');
-        $token= $request->get('fcm_token');
+        $name = $request->get('name');
+        $details = $request->get('details');
+        $phone = $request->get('phone');
+        $period_date = $request->get('period_date');
+        $token = $request->get('fcm_token');
 
         $mainuser = UserPregnancy::where('name', $name)->first();
 
@@ -32,7 +115,7 @@ class ApiController extends Controller
 
             $data = DB::table('user_pregnancy')
                 ->selectRaw('id,name,details,phone,last_period_date,fcm_token')
-                ->where('name',$name)
+                ->where('name', $name)
                 ->get();
 
 
@@ -52,7 +135,7 @@ class ApiController extends Controller
         }
 
 
-            //return new JsonResponse($users);
+        //return new JsonResponse($users);
 
 
     }
@@ -93,23 +176,23 @@ class ApiController extends Controller
     public function getGuideDetailsById(Request $request)
     {
 
-/*
-        if ($request->headers->get('Content-Type') == 'application/json' && $request->headers->get('X-API-SECRET') == '8821') {*/
+        /*
+                if ($request->headers->get('Content-Type') == 'application/json' && $request->headers->get('X-API-SECRET') == '8821') {*/
 
-            $data = DB::table('nutrition')
-                ->selectRaw('id,name, details,url')
-                ->where('guide_id', $request->id)
-                ->get();
+        $data = DB::table('nutrition')
+            ->selectRaw('id,name, details,url')
+            ->where('guide_id', $request->id)
+            ->get();
 
-            return new JsonResponse($data);
+        return new JsonResponse($data);
 
-      /*  } else {
+        /*  } else {
 
-            return new JsonResponse([
-                'message' => 'Invalied Headers',
-                'status' => 500
-            ]);
-        }*/
+              return new JsonResponse([
+                  'message' => 'Invalied Headers',
+                  'status' => 500
+              ]);
+          }*/
 
     }
 
@@ -129,7 +212,6 @@ class ApiController extends Controller
             ->get();
 
         return new JsonResponse($data);
-
 
 
     }
@@ -273,58 +355,41 @@ class ApiController extends Controller
 
     }
 
+
+
     /**
      * @param Request $request
      */
-    public function sendPushNotification()
+    public function getAllUser(Request $request)
     {
 
-     //   $tokens = array('token_1','token_2','token_3');
-        $tokens = array('cfAgCtHXSdezJdXfHB02WQ:APA91bG8WtSkZiIM5i5kLMW0tXk0AStTXXgAQFosDPSxyZ4-gGse3SgjdxniiW7zWX9hiZsUg1c2zTFJqGdJSPcvCNXj-LD6ZyeUyQ5-pNxs8O84721TrLH2fO2ype2pEEwlVQvAckBe');
-        $title = "Title Here";
-        $msg = "Subtitle or description Here";
-//Custom Parameters if any
-        $customParam = array(
-            'redirection_id' => '2',
-            'redirection_type' => 'post_page' //'post_page','category_page','blog_page'
-        );
-        push_notification_android($tokens,$title,$msg,$customParam);
-        function push_notification_android($tokens,$title,$msg,$customParam) {
-            $url = 'https://fcm.googleapis.com/fcm/send';
-            $api_key = 'AAAA5EHSlsA:APA91bE7E-A-c9vrB841JbazYDeMBAUvXgNr6rrL983HY1Tb-o8KMAZ92FKPWw7nj53eKY0C-on1xI2_0SpLGmh6VvBRHde3e_pYDfRQ_KT3mk4YcV2Qb-m4Onh70I6AsL4-aVyhZvZ1';
-            $messageArray = array();
-            $messageArray["notification"] = array (
-                'title' => $title,
-                'message' => $msg,
-                'customParam' => $customParam,
-            );
-            $fields = array(
-                'registration_ids' => $tokens,
-                'data' => $messageArray,
-            );
-            $headers = array(
-                'Authorization: key=' . $api_key, //GOOGLE_API_KEY
-                'Content-Type: application/json'
-            );
-// Open connection
-            $ch = curl_init();
-// Set the url, number of POST vars, POST data
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-// Disabling SSL Certificate support temporarly
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
-// Execute post
-            $result = curl_exec($ch);
-            if ($result === FALSE) {
-                echo 'Android: Curl failed: ' . curl_error($ch);
+
+
+        $users = DB::table('user_pregnancy')
+            ->selectRaw('fcm_token,last_period_date')
+            ->get();
+
+        foreach ($users as $data) {
+
+            $date2 = date_create("" . $data->last_period_date);
+            $date1 = date_create(date('Y/m/d'));
+            $diff = date_diff($date2, $date1);
+
+            $days = $diff;
+
+            $intday = (int) $days->format("%d");
+
+
+
+            if ($intday % 7 == 0) {
+                echo "data show".$intday. "<br>";
+                sendPushNotification($intday/7,"" . $data->fcm_token);
+            } else {
+                echo "no need to show".$intday. "<br>";
             }
-// Close connection
-            curl_close($ch);
-            return $result;
+
         }
+
 
 
     }
