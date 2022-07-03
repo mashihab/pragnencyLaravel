@@ -14,30 +14,64 @@ use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 
-function sendPushNotification($week,$fcm)
+
+
+class ApiController extends Controller
 {
+   private function sendPushNotification($week,$fcm)
+    {
 
-    //   $tokens = array('token_1','token_2','token_3');
-    /*    $tokens = array('eTP0tmo1Q7-PyL8xCOrNRE:APA91bEqljWxM870p6EZIYUO-EnSRW4cwEvY7Q0mEkQBiZ3m-BYQBKIaRaLM4Q_KSi-SDmvysQ109i_Z5X9cDvqRsJMRjTN3JPkOrXKuB5WJxcxuNr486zTNRz2RaHE8h_KY_B7OpRJ8', 'cfAgCtHXSdezJdXfHB02WQ:APA91bG8WtSkZiIM5i5kLMW0tXk0AStTXXgAQFosDPSxyZ4-gGse3SgjdxniiW7zWX9hiZsUg1c2zTFJqGdJSPcvCNXj-LD6ZyeUyQ5-pNxs8O84721TrLH2fO2ype2pEEwlVQvAckBe');*/
+        //   $tokens = array('token_1','token_2','token_3');
+        /*    $tokens = array('eTP0tmo1Q7-PyL8xCOrNRE:APA91bEqljWxM870p6EZIYUO-EnSRW4cwEvY7Q0mEkQBiZ3m-BYQBKIaRaLM4Q_KSi-SDmvysQ109i_Z5X9cDvqRsJMRjTN3JPkOrXKuB5WJxcxuNr486zTNRz2RaHE8h_KY_B7OpRJ8', 'cfAgCtHXSdezJdXfHB02WQ:APA91bG8WtSkZiIM5i5kLMW0tXk0AStTXXgAQFosDPSxyZ4-gGse3SgjdxniiW7zWX9hiZsUg1c2zTFJqGdJSPcvCNXj-LD6ZyeUyQ5-pNxs8O84721TrLH2fO2ype2pEEwlVQvAckBe');*/
 
 
-    $tokens = array($fcm);
+        $tokens = array($fcm);
+
+        $info = DB::table('tips_and_trick')
+            ->where("week",$week)
+            ->get();
+
+       // $title = "Title Here shihab";
+
+        foreach ($info as $data) {
+            print_r($data->name);
+            $this->push_notification_android($tokens, $data->name, $data->details);
+        }
 
 
-    if ($week== 2){
-        $title = "Title Here shihab";
-        $msg = "Week is 2";
-    }else if ($week== 1){
-        $title = "Title Here shihab";
-        $msg = "Week is not 1";
-    }else{
-        $title = "Title Here shihab";
-        $msg = "No Week";
+
+    /*    if ($week== 2){
+            $info = DB::table('tips_and_trick')
+                ->selectRaw('name,week')
+                ->where("week",$week)
+                ->get();
+            // print_r($info->week);
+            $title = "Title Here shihab";
+            $msg = "Week is 2";
+        }else if ($week== 1){
+            $info = DB::table('tips_and_trick')
+                ->selectRaw('name,week')
+                ->where("week",$week)
+                ->get();
+            // print_r($info->week);
+            $title = "Title Here shihab";
+            $msg = "Week is not 1";
+        }else{
+            $info = DB::table('tips_and_trick')
+                ->selectRaw('name,week')
+                ->where("week",$week)
+                ->get();
+            //print_r($info->week);
+            $title = "Title Here shihab";
+            $msg = "No Week";
+        }*/
+
+      // $this->push_notification_android($tokens, $title, $msg);
+
     }
 
 
-
-    function push_notification_android($tokens, $title, $msg)
+  private function push_notification_android($tokens, $title, $msg)
     {
         $url = 'https://fcm.googleapis.com/fcm/send';
         $api_key = 'AAAA5EHSlsA:APA91bE7E-A-c9vrB841JbazYDeMBAUvXgNr6rrL983HY1Tb-o8KMAZ92FKPWw7nj53eKY0C-on1xI2_0SpLGmh6VvBRHde3e_pYDfRQ_KT3mk4YcV2Qb-m4Onh70I6AsL4-aVyhZvZ1';
@@ -87,14 +121,6 @@ function sendPushNotification($week,$fcm)
         curl_close($ch);
         return $result;
     }
-
-    push_notification_android($tokens, $title, $msg);
-
-}
-
-
-class ApiController extends Controller
-{
 
     /**
      * @param Request $request
@@ -401,8 +427,8 @@ class ApiController extends Controller
 
 
             if ($intday % 7 == 0) {
-               // echo "data show".$intday. "<br>";
-                sendPushNotification($intday/7,"" . $data->fcm_token);
+              //  echo "data show".$intday. "<br>";
+                $this->sendPushNotification($intday/7,"" . $data->fcm_token);
             } else {
              //   echo "no need to show".$intday. "<br>";
             }

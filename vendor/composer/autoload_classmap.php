@@ -26,6 +26,7 @@ return array(
     'App\\Models\\Pregnancypreparation' => $baseDir . '/app/Models/Pregnancypreparation.php',
     'App\\Models\\Rest' => $baseDir . '/app/Models/Rest.php',
     'App\\Models\\Sports' => $baseDir . '/app/Models/Sports.php',
+    'App\\Models\\TipsAndTrick' => $baseDir . '/app/Models/TipsAndTrick.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Models\\UserPregnancy' => $baseDir . '/app/Models/UserPregnancy.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
