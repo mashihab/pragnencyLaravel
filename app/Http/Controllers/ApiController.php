@@ -174,9 +174,17 @@ class ApiController extends Controller
             $user_pragnency->last_period_date = $period_date;
             $user_pragnency->save();
 
-            return response()->json([
+           /* return response()->json([
                 "message" => "Member created"
-            ], 200);
+            ], 200);*/
+
+            $data = DB::table('user_pregnancy')
+                ->selectRaw('id,name,details,phone,last_period_date,fcm_token')
+                ->where('name', $name)
+                ->get();
+
+
+            return new JsonResponse($data);
         }
 
 
@@ -227,6 +235,33 @@ class ApiController extends Controller
         $data = DB::table('nutrition')
             ->selectRaw('id,name, details,url')
             ->where('guide_id', $request->id)
+            ->get();
+
+        return new JsonResponse($data);
+
+        /*  } else {
+
+              return new JsonResponse([
+                  'message' => 'Invalied Headers',
+                  'status' => 500
+              ]);
+          }*/
+
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getBabySizeByWeek(Request $request)
+    {
+
+        /*
+                if ($request->headers->get('Content-Type') == 'application/json' && $request->headers->get('X-API-SECRET') == '8821') {*/
+
+        $data = DB::table('baby_size')
+            ->selectRaw('id,name,length,length_unit,weight,weight_unit,week,url')
+            ->where('week', $request->id)
             ->get();
 
         return new JsonResponse($data);

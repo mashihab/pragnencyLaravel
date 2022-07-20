@@ -22,6 +22,7 @@ Route::GET('/rest', [\App\Http\Controllers\ApiController::class,'getRest']);
 Route::GET('/pragnancy_problem', [\App\Http\Controllers\ApiController::class,'getPragnancyProblem']);
 Route::GET('/pregnancy_preparation', [\App\Http\Controllers\ApiController::class,'getPregnancyPreparation']);
 Route::GET('/guide_detals/{id}', [\App\Http\Controllers\ApiController::class,'getGuideDetailsById']);
+Route::GET('/baby_size/{id}', [\App\Http\Controllers\ApiController::class,'getBabySizeByWeek']);
 Route::POST('/guide_detals_post', [\App\Http\Controllers\ApiController::class,'getGuideDetailsPost']);
 Route::POST('/pragnency_signup', [\App\Http\Controllers\ApiController::class,'pragnencySignup']);
 Route::GET('/get_all_user', [\App\Http\Controllers\ApiController::class,'getAllUser']);
