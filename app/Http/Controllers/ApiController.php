@@ -154,13 +154,13 @@ class ApiController extends Controller
         $period_date = $request->get('period_date');
         $token = $request->get('fcm_token');
 
-        $mainuser = UserPregnancy::where('name', $name)->first();
+        $mainuser = UserPregnancy::where('phone',$phone)->first();
 
         if ($mainuser) {
 
             $data = DB::table('user_pregnancy')
                 ->selectRaw('id,name,details,phone,last_period_date,fcm_token')
-                ->where('name', $name)
+                ->where('phone', $phone)
                 ->get();
 
 
