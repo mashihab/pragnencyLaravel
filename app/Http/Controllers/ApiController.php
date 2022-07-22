@@ -473,5 +473,38 @@ class ApiController extends Controller
 
 
     }
+
+    /**
+     * @param Request $request
+     */
+    public function getAllDoctor(Request $request)
+    {
+
+        $doctors = DB::table('imergency_doctor')
+            ->selectRaw('name,university,year,phone,url')
+            ->get();
+
+        return new JsonResponse($doctors);
+
+
+
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function getAllAppoinment(Request $request)
+    {
+
+        $doctors = DB::table('appointment')
+            ->selectRaw('name,details,year,phone')
+            ->get();
+
+        return new JsonResponse($doctors);
+
+
+
+    }
+
 }
 
