@@ -275,6 +275,21 @@ class ApiController extends Controller
           }*/
 
     }
+ /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getQuestionById(Request $request)
+    {
+
+        $data = DB::table('my_question')
+            ->selectRaw('id,category,category_id,question,answer')
+            ->where('category_id', $request->id)
+            ->get();
+
+        return new JsonResponse($data);
+
+    }
 
 
     /**
@@ -501,6 +516,22 @@ class ApiController extends Controller
             ->get();
 
         return new JsonResponse($doctors);
+
+
+
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function getAllQuestion(Request $request)
+    {
+
+        $question = DB::table('my_question')
+            ->selectRaw('category,category_id')
+            ->get();
+
+        return new JsonResponse($question);
 
 
 
