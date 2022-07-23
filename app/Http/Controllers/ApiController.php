@@ -527,9 +527,9 @@ class ApiController extends Controller
     public function getAllQuestion(Request $request)
     {
 
-        $question = DB::table('my_question')
-            ->selectRaw('category,category_id')
-            ->get();
+        $question = DB::table('my_question')->distinct()
+            ->selectRaw('category_id,category')
+            ->get(['category_id']);
 
         return new JsonResponse($question);
 
