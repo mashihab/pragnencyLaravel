@@ -208,10 +208,12 @@ class ApiController extends Controller
         $my_ask->save();
 
 
-        return new JsonResponse([
+        return new JsonResponse($my_ask);
+
+        /*return new JsonResponse([
             'message' => 'Insert Successful',
             'status' => 200
-        ]);
+        ]);*/
 
 
 
