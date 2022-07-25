@@ -534,6 +534,7 @@ class ComposerStaticInitdbf11f1af314f55c45688775fdf05138
         'App\\Models\\BabySize' => __DIR__ . '/../..' . '/app/Models/BabySize.php',
         'App\\Models\\Guide' => __DIR__ . '/../..' . '/app/Models/Guide.php',
         'App\\Models\\ImergencyDoctor' => __DIR__ . '/../..' . '/app/Models/ImergencyDoctor.php',
+        'App\\Models\\MyAsk' => __DIR__ . '/../..' . '/app/Models/MyAsk.php',
         'App\\Models\\MyQuestion' => __DIR__ . '/../..' . '/app/Models/MyQuestion.php',
         'App\\Models\\Nutrition' => __DIR__ . '/../..' . '/app/Models/Nutrition.php',
         'App\\Models\\Pragnancyproblem' => __DIR__ . '/../..' . '/app/Models/Pragnancyproblem.php',

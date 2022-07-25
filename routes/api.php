@@ -26,6 +26,9 @@ Route::GET('/baby_size/{id}', [\App\Http\Controllers\ApiController::class,'getBa
 Route::GET('/question_by_id/{id}', [\App\Http\Controllers\ApiController::class,'getQuestionById']);
 Route::POST('/guide_detals_post', [\App\Http\Controllers\ApiController::class,'getGuideDetailsPost']);
 Route::POST('/pragnency_signup', [\App\Http\Controllers\ApiController::class,'pragnencySignup']);
+Route::POST('/insert_question', [\App\Http\Controllers\ApiController::class,'insertQuestion']);
+Route::GET('/get_all_ask/{id}', [\App\Http\Controllers\ApiController::class,'getAllAsk']);
+Route::GET('/delete_my_ask/{id}', [\App\Http\Controllers\ApiController::class,'deleteMyAsk']);
 Route::GET('/get_all_user', [\App\Http\Controllers\ApiController::class,'getAllUser']);
 Route::GET('/get_all_doctor', [\App\Http\Controllers\ApiController::class,'getAllDoctor']);
 Route::GET('/get_all_appoinment', [\App\Http\Controllers\ApiController::class,'getAllAppoinment']);

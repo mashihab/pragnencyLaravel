@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 
-
-
 use App\Models\Guids;
 use App\Models\Members;
+use App\Models\MyAsk;
 use App\Models\Nutrition;
 use App\Models\UserPregnancy;
 use Illuminate\Http\Request;
@@ -14,11 +13,9 @@ use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 
-
-
 class ApiController extends Controller
 {
-   private function sendPushNotification($week,$fcm)
+    private function sendPushNotification($week, $fcm)
     {
 
         //   $tokens = array('token_1','token_2','token_3');
@@ -28,10 +25,10 @@ class ApiController extends Controller
         $tokens = array($fcm);
 
         $info = DB::table('tips_and_trick')
-            ->where("week",$week)
+            ->where("week", $week)
             ->get();
 
-       // $title = "Title Here shihab";
+        // $title = "Title Here shihab";
 
         foreach ($info as $data) {
             print_r($data->name);
@@ -39,39 +36,38 @@ class ApiController extends Controller
         }
 
 
+        /*    if ($week== 2){
+                $info = DB::table('tips_and_trick')
+                    ->selectRaw('name,week')
+                    ->where("week",$week)
+                    ->get();
+                // print_r($info->week);
+                $title = "Title Here shihab";
+                $msg = "Week is 2";
+            }else if ($week== 1){
+                $info = DB::table('tips_and_trick')
+                    ->selectRaw('name,week')
+                    ->where("week",$week)
+                    ->get();
+                // print_r($info->week);
+                $title = "Title Here shihab";
+                $msg = "Week is not 1";
+            }else{
+                $info = DB::table('tips_and_trick')
+                    ->selectRaw('name,week')
+                    ->where("week",$week)
+                    ->get();
+                //print_r($info->week);
+                $title = "Title Here shihab";
+                $msg = "No Week";
+            }*/
 
-    /*    if ($week== 2){
-            $info = DB::table('tips_and_trick')
-                ->selectRaw('name,week')
-                ->where("week",$week)
-                ->get();
-            // print_r($info->week);
-            $title = "Title Here shihab";
-            $msg = "Week is 2";
-        }else if ($week== 1){
-            $info = DB::table('tips_and_trick')
-                ->selectRaw('name,week')
-                ->where("week",$week)
-                ->get();
-            // print_r($info->week);
-            $title = "Title Here shihab";
-            $msg = "Week is not 1";
-        }else{
-            $info = DB::table('tips_and_trick')
-                ->selectRaw('name,week')
-                ->where("week",$week)
-                ->get();
-            //print_r($info->week);
-            $title = "Title Here shihab";
-            $msg = "No Week";
-        }*/
-
-      // $this->push_notification_android($tokens, $title, $msg);
+        // $this->push_notification_android($tokens, $title, $msg);
 
     }
 
 
-  private function push_notification_android($tokens, $title, $msg)
+    private function push_notification_android($tokens, $title, $msg)
     {
         $url = 'https://fcm.googleapis.com/fcm/send';
         $api_key = 'AAAA5EHSlsA:APA91bE7E-A-c9vrB841JbazYDeMBAUvXgNr6rrL983HY1Tb-o8KMAZ92FKPWw7nj53eKY0C-on1xI2_0SpLGmh6VvBRHde3e_pYDfRQ_KT3mk4YcV2Qb-m4Onh70I6AsL4-aVyhZvZ1';
@@ -130,13 +126,11 @@ class ApiController extends Controller
     {
 
 
-            $user_pragnency = new UserPregnancy();
-            $user_pragnency->name = "shihab";
-            $user_pragnency->details = "dd";
-            $user_pragnency->phone = "235345";
-            $user_pragnency->save();
-
-
+        $user_pragnency = new UserPregnancy();
+        $user_pragnency->name = "shihab";
+        $user_pragnency->details = "dd";
+        $user_pragnency->phone = "235345";
+        $user_pragnency->save();
 
 
     }
@@ -154,7 +148,7 @@ class ApiController extends Controller
         $period_date = $request->get('period_date');
         $token = $request->get('fcm_token');
 
-        $mainuser = UserPregnancy::where('phone',$phone)->first();
+        $mainuser = UserPregnancy::where('phone', $phone)->first();
 
         if ($mainuser) {
 
@@ -174,9 +168,9 @@ class ApiController extends Controller
             $user_pragnency->last_period_date = $period_date;
             $user_pragnency->save();
 
-           /* return response()->json([
-                "message" => "Member created"
-            ], 200);*/
+            /* return response()->json([
+                 "message" => "Member created"
+             ], 200);*/
 
             $data = DB::table('user_pregnancy')
                 ->selectRaw('id,name,details,phone,last_period_date,fcm_token')
@@ -189,6 +183,36 @@ class ApiController extends Controller
 
 
         //return new JsonResponse($users);
+
+
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|JsonResponse
+     */
+    public function insertQuestion(Request $request)
+    {
+
+        $userid = $request->get('user_id');
+        $catid = $request->get('category_id');
+        $qus = $request->get('question');
+        $ans = $request->get('answer');
+
+
+        $my_ask = new MyAsk();
+        $my_ask->user_id = $userid;
+        $my_ask->category_id = $catid;
+        $my_ask->question = $qus;
+        $my_ask->answer = $ans;
+        $my_ask->save();
+
+
+        return new JsonResponse([
+            'message' => 'Insert Successful',
+            'status' => 200
+        ]);
+
 
 
     }
@@ -275,7 +299,8 @@ class ApiController extends Controller
           }*/
 
     }
- /**
+
+    /**
      * @param Request $request
      * @return JsonResponse
      */
@@ -451,13 +476,11 @@ class ApiController extends Controller
     }
 
 
-
     /**
      * @param Request $request
      */
     public function getAllUser(Request $request)
     {
-
 
 
         $users = DB::table('user_pregnancy')
@@ -472,20 +495,62 @@ class ApiController extends Controller
 
             $days = $diff;
 
-            $intday = (int) $days->format("%d");
-
+            $intday = (int)$days->format("%d");
 
 
             if ($intday % 7 == 0) {
-              //  echo "data show".$intday. "<br>";
-                $this->sendPushNotification($intday/7,"" . $data->fcm_token);
+                //  echo "data show".$intday. "<br>";
+                $this->sendPushNotification($intday / 7, "" . $data->fcm_token);
             } else {
-             //   echo "no need to show".$intday. "<br>";
+                //   echo "no need to show".$intday. "<br>";
             }
 
         }
 
 
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getAllAsk(Request $request)
+    {
+
+        $data = DB::table('my_ask')
+            ->selectRaw('id,category_id,question,answer')
+            ->where('user_id', $request->id)
+            ->get();
+
+        return new JsonResponse($data);
+
+    }
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function deleteMyAsk(Request $request)
+    {
+
+      /*  $data = DB::table('my_ask')
+            ->selectRaw('id,category_id,question,answer')
+            ->where('user_id', $request->id)
+            ->get();*/
+
+        $data = MyAsk::where('id', $request->id)->get();
+
+        if (!$data->isEmpty()) {
+            MyAsk::where('id', $request->id)->delete();
+            return new JsonResponse([
+                'message' => 'Deleted',
+                'status' => 200
+            ]);
+        } else {
+             return new JsonResponse([
+                'message' => 'Not Fount',
+                'status' => 404
+            ]);
+        }
 
     }
 
@@ -500,7 +565,6 @@ class ApiController extends Controller
             ->get();
 
         return new JsonResponse($doctors);
-
 
 
     }
@@ -518,7 +582,6 @@ class ApiController extends Controller
         return new JsonResponse($doctors);
 
 
-
     }
 
     /**
@@ -532,7 +595,6 @@ class ApiController extends Controller
             ->get(['category_id']);
 
         return new JsonResponse($question);
-
 
 
     }

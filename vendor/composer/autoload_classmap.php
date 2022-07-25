@@ -24,6 +24,7 @@ return array(
     'App\\Models\\BabySize' => $baseDir . '/app/Models/BabySize.php',
     'App\\Models\\Guide' => $baseDir . '/app/Models/Guide.php',
     'App\\Models\\ImergencyDoctor' => $baseDir . '/app/Models/ImergencyDoctor.php',
+    'App\\Models\\MyAsk' => $baseDir . '/app/Models/MyAsk.php',
     'App\\Models\\MyQuestion' => $baseDir . '/app/Models/MyQuestion.php',
     'App\\Models\\Nutrition' => $baseDir . '/app/Models/Nutrition.php',
     'App\\Models\\Pragnancyproblem' => $baseDir . '/app/Models/Pragnancyproblem.php',
