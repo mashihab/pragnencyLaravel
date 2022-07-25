@@ -200,20 +200,37 @@ class ApiController extends Controller
         $ans = $request->get('answer');
 
 
-        $my_ask = new MyAsk();
-        $my_ask->user_id = $userid;
-        $my_ask->category_id = $catid;
-        $my_ask->question = $qus;
-        $my_ask->answer = $ans;
-        $my_ask->save();
+        $users = MyAsk::where([
+            'user_id' => $userid,
+            'category_id' => $catid,
+            'question' => $qus
+        ])->first();
+
+        if ($users){
+            return new JsonResponse([
+                'message' => 'Already Added',
+                'status' => 200
+            ]);
+        }else{
+
+            $my_ask = new MyAsk();
+            $my_ask->user_id = $userid;
+            $my_ask->category_id = $catid;
+            $my_ask->question = $qus;
+            $my_ask->answer = $ans;
+            $my_ask->save();
 
 
-        return new JsonResponse($my_ask);
 
-        /*return new JsonResponse([
-            'message' => 'Insert Successful',
-            'status' => 200
-        ]);*/
+
+            return new JsonResponse([
+                'message' => 'Insert Successful',
+                'status' => 200
+            ]);
+
+        }
+
+
 
 
 
